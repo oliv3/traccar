@@ -42,9 +42,6 @@ public class BanGeocoder extends JsonGeocoder {
                 if (location.containsKey("street")) {
                     address.setStreet(location.getString("street"));
                 }
-                if (location.containsKey("citycode")) {
-                    address.setPostcode(location.getString("citycode"));
-                }
                 if (location.containsKey("city")) {
                     address.setSettlement(location.getString("city"));
                 }
