@@ -45,6 +45,7 @@ import org.traccar.geocoder.GoogleGeocoder;
 import org.traccar.geocoder.MapQuestGeocoder;
 import org.traccar.geocoder.NominatimGeocoder;
 import org.traccar.geocoder.OpenCageGeocoder;
+import org.traccar.geocoder.BanGeocoder;
 import org.traccar.geocoder.Geocoder;
 import org.traccar.geolocation.UnwiredGeolocationProvider;
 import org.traccar.helper.Log;
@@ -259,6 +260,9 @@ public final class Context {
                     break;
                 case "geocodefarm":
                     geocoder = new GeocodeFarmGeocoder(key, language, cacheSize);
+                    break;
+                case "ban":
+                    geocoder = new BanGeocoder(cacheSize);
                     break;
                 default:
                     geocoder = new GoogleGeocoder(key, language, cacheSize);
