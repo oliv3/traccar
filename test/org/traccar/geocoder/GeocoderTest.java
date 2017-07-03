@@ -109,4 +109,20 @@ public class GeocoderTest {
         Assert.assertEquals("Estrella Avenue, Arcadia, California, United States",  waitAddress());
     }
 
+    public void testBan() throws InterruptedException {
+        Geocoder geocoder = new BanGeocoder(0);
+
+        geocoder.getAddress(new AddressFormat(), 48.8593, 2.3219, new Geocoder.ReverseGeocoderCallback() {
+            @Override
+            public void onSuccess(String address) {
+                setAddress(address);
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+            }
+        });
+        Assert.assertEquals("1 Ibn Shaprut St, Jerusalem, Jerusalem District, IL", waitAddress());
+    }
+
 }
