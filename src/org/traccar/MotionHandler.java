@@ -31,7 +31,7 @@ public class MotionHandler extends BaseDataHandler {
     @Override
     protected Position handlePosition(Position position) {
         if (!position.getAttributes().containsKey(Position.KEY_MOTION)) {
-            position.set(Position.KEY_MOTION, position.getSpeed() > speedThreshold);
+            position.set(Position.KEY_MOTION, position.getSpeed() != null && position.getSpeed() > speedThreshold);
         }
         return position;
     }
