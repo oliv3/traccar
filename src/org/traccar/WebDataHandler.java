@@ -61,7 +61,16 @@ public class WebDataHandler extends BaseDataHandler {
             f.format("%02d%07.4f,%c,", (int) Math.abs(lat), Math.abs(lat) % 1 * 60, lat < 0 ? 'S' : 'N');
             f.format("%03d%07.4f,%c,", (int) Math.abs(lon), Math.abs(lon) % 1 * 60, lon < 0 ? 'W' : 'E');
 
-            f.format("%.2f,%.2f,", position.getSpeed(), position.getCourse());
+            if (position.getSpeed() != null) {
+                f.format("%.2f,", position.getSpeed());
+            } else {
+                f.format(",");
+            }
+
+            if (position.getCourse() != null)  {
+                f.format("%.2f", position.getCourse());
+            }
+
             f.format("%1$td%1$tm%1$ty,,", calendar);
         }
 
@@ -73,7 +82,7 @@ public class WebDataHandler extends BaseDataHandler {
     private String calculateStatus(Position position) {
         if (position.getAttributes().containsKey(Position.KEY_ALARM)) {
             return "0xF841"; // STATUS_PANIC_ON
-        } else if (position.getSpeed() < 1.0) {
+        } else if (position.getSpeed() == null || position.getSpeed() < 1.0) {
             return "0xF020"; // STATUS_LOCATION
         } else {
             return "0xF11C"; // STATUS_MOTION_MOVING
@@ -95,10 +104,10 @@ public class WebDataHandler extends BaseDataHandler {
                 .replace("{valid}", String.valueOf(position.getValid()))
                 .replace("{latitude}", String.valueOf(position.getLatitude()))
                 .replace("{longitude}", String.valueOf(position.getLongitude()))
-                .replace("{altitude}", String.valueOf(position.getAltitude()))
-                .replace("{speed}", String.valueOf(position.getSpeed()))
-                .replace("{course}", String.valueOf(position.getCourse()))
-                .replace("{accuracy}", String.valueOf(position.getAccuracy()))
+                .replace("{altitude}", (position.getAltitude() == null) ? "0" : String.valueOf(position.getAltitude()))
+                .replace("{speed}", (position.getSpeed() == null) ? "0" : String.valueOf(position.getSpeed()))
+                .replace("{course}", (position.getCourse() == null) ? "0" : String.valueOf(position.getCourse()))
+                .replace("{accuracy}", (position.getAccuracy() == null) ? "0" : String.valueOf(position.getAccuracy()))
                 .replace("{statusCode}", calculateStatus(position));
 
         if (position.getAddress() != null) {
