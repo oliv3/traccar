@@ -129,7 +129,7 @@ public class FilterHandler extends BaseDataHandler {
     }
 
     private boolean filterAccuracy(Position position) {
-        return filterAccuracy != 0 && position.getAccuracy() > filterAccuracy;
+        return filterAccuracy != 0 && (position.getAccuracy() == null || position.getAccuracy() > filterAccuracy);
     }
 
     private boolean filterApproximate(Position position) {
@@ -137,7 +137,7 @@ public class FilterHandler extends BaseDataHandler {
     }
 
     private boolean filterStatic(Position position) {
-        return filterStatic && position.getSpeed() == 0.0;
+        return filterStatic && (position.getSpeed() == null || position.getSpeed() == 0.0);
     }
 
     private boolean filterDistance(Position position, Position last) {

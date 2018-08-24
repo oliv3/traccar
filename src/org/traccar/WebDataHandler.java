@@ -71,7 +71,7 @@ public class WebDataHandler extends BaseDataHandler {
                 f.format("%.2f", position.getCourse());
             }
 
-            f.format("%1$td%1$tm%1$ty,,", calendar);
+            f.format(",%1$td%1$tm%1$ty,,", calendar);
         }
 
         s.append(Checksum.nmea(s.toString()));
