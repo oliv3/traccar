@@ -35,10 +35,13 @@ public class GpxBuilder {
     private static final String NAME = "<name>%1$s</name><trkseg>%n";
     private static final String POINT = "<trkpt lat=\"%1$f\" lon=\"%2$f\">"
             + "<time>%3$s</time>"
-            + "<geoidheight>%4$f</geoidheight>"
-            + "<course>%5$f</course>"
-            + "<speed>%6$f</speed>"
+            + "%4$s" /* altitude */
+            + "%5$s" /* course */
+            + "%6$s" /* speed */
             + "</trkpt>%n";
+    private static final String ALTITUDE = "<geoidheight>%1$f</geoidheight>";
+    private static final String COURSE = "<course>%1$f</course>";
+    private static final String SPEED = "<speed>%1$f</speed>";
     private static final String FOOTER = "</trkseg></trk></gpx>";
 
     private static final DateTimeFormatter DATE_FORMAT = ISODateTimeFormat.dateTime();
@@ -54,9 +57,12 @@ public class GpxBuilder {
     }
 
     public void addPosition(Position position) {
+        String altitude = (position.getAltitude() != null) ? String.format(ALTITUDE, position.getAltitude()) : "";
+        String course = (position.getCourse() != null) ? String.format(COURSE, position.getCourse()) : "";
+        String speed = (position.getSpeed() != null) ? String.format(SPEED,
+                UnitsConverter.mpsFromKnots(position.getSpeed())) : "";
         builder.append(String.format(POINT, position.getLatitude(), position.getLongitude(),
-                DATE_FORMAT.print(new DateTime(position.getFixTime())), position.getAltitude(),
-                position.getCourse(), UnitsConverter.mpsFromKnots(position.getSpeed())));
+                DATE_FORMAT.print(new DateTime(position.getFixTime())), altitude, course, speed));
     }
 
     public void addPositions(Collection<Position> positions) {
