@@ -299,4 +299,12 @@ public class Position extends Message {
         return super.getType();
     }
 
+    public void clear() {
+        this.latitude = 0;
+        this.longitude = 0;
+        this.altitude = null;
+        this.speed = null;
+        this.course = null;
+        this.accuracy = null;
+    }
 }
