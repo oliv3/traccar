@@ -175,10 +175,12 @@ public final class ReportUtils {
         double speedMax = 0.0;
         double speedSum = 0.0;
         for (int i = startIndex; i <= endIndex; i++) {
-            double speed = positions.get(i).getSpeed();
-            speedSum += speed;
-            if (speed > speedMax) {
-                speedMax = speed;
+            if (positions.get(i).getSpeed() != null) {
+                double speed = positions.get(i).getSpeed();
+                speedSum += speed;
+                if (speed > speedMax) {
+                    speedMax = speed;
+                }
             }
         }
 
@@ -318,7 +320,8 @@ public final class ReportUtils {
                 && positions.get(index).getAttributes().get(Position.KEY_MOTION) instanceof Boolean) {
             return positions.get(index).getBoolean(Position.KEY_MOTION);
         } else {
-            return positions.get(index).getSpeed() > tripsConfig.getSpeedThreshold();
+            return positions.get(index).getSpeed() != null
+                    && positions.get(index).getSpeed() > tripsConfig.getSpeedThreshold();
         }
     }
 

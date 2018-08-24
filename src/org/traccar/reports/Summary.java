@@ -57,8 +57,10 @@ public final class Summary {
                             - previousPosition.getFixTime().getTime());
                 }
                 previousPosition = position;
-                speedSum += position.getSpeed();
-                result.setMaxSpeed(position.getSpeed());
+                if (position.getSpeed() != null) {
+                    speedSum += position.getSpeed();
+                    result.setMaxSpeed(position.getSpeed());
+                }
             }
             boolean ignoreOdometer = Context.getDeviceManager()
                     .lookupAttributeBoolean(deviceId, "report.ignoreOdometer", false, true);
