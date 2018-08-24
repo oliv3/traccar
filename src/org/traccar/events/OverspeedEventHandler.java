@@ -76,7 +76,7 @@ public class OverspeedEventHandler extends BaseEventHandler {
         Boolean oldOverspeed = deviceState.getOverspeedState();
 
         long currentTime = position.getFixTime().getTime();
-        boolean newOverspeed = position.getSpeed() > speedLimit;
+        boolean newOverspeed = position.getSpeed() != null && position.getSpeed() > speedLimit;
         if (newOverspeed && !oldOverspeed) {
             if (deviceState.getOverspeedPosition() == null) {
                 deviceState.setOverspeedPosition(position);
@@ -108,7 +108,8 @@ public class OverspeedEventHandler extends BaseEventHandler {
         if (device == null) {
             return null;
         }
-        if (!Context.getIdentityManager().isLatestPosition(position) || !position.getValid()) {
+        if (!Context.getIdentityManager().isLatestPosition(position) || !position.getValid()
+                || position.getSpeed() == null) {
             return null;
         }
 
