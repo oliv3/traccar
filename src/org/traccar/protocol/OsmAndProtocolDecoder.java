@@ -139,6 +139,9 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
                     case "driverUniqueId":
                         position.set(Position.KEY_DRIVER_UNIQUE_ID, value);
                         break;
+                    case "alarm":
+                        position.set(Position.KEY_ALARM, value);
+                        break;
                     default:
                         try {
                             position.set(entry.getKey(), Double.parseDouble(value));
